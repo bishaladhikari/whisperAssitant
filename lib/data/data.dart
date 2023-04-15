@@ -148,13 +148,13 @@ class Playlist {
 }
 
 const lofihiphopPlaylist = Playlist(
-  id: '5-playlist',
-  name: 'lofi hip hop music - beats to relax/study to',
-  imageURL: 'assets/lofigirl.jpg',
+  id: 'Jarvis',
+  name: 'Your AI assistant, at your service...',
+  imageURL: 'assets/AIlogo.gif',
   description:
-      'A daily selection of chill beats - perfect to help you relax & study 📚',
-  creator: 'Lofi Girl',
-  duration: '28 min',
-  followers: '5,351,685',
+      'Do you have a question? Ask me anything!',
+  creator: 'Bishal Adhikari ',
+  duration: '',
+  followers: '',
   songs: _lofihiphopMusic,
 );

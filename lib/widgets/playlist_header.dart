@@ -28,7 +28,7 @@ class PlaylistHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'PLAYLIST',
+                    'Jarvis',
                     style: Theme.of(context)
                         .textTheme
                         .overline!
@@ -44,7 +44,7 @@ class PlaylistHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 16.0),
                   Text(
-                    'Created by ${playlist.creator} • ${playlist.songs.length} songs, ${playlist.duration}',
+                    'Created by ${playlist.creator} •',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ],
@@ -88,7 +88,7 @@ class _PlaylistButtons extends StatelessWidget {
                 .copyWith(fontSize: 12.0, letterSpacing: 2.0),
           ),
           onPressed: () {},
-          child: const Text('PLAY'),
+          child: const Text('Prompt'),
         ),
         const SizedBox(width: 8.0),
         IconButton(

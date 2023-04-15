@@ -14,10 +14,19 @@ class SideMenu extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Image.asset(
-                  'assets/spotify_logo.png',
-                  height: 55.0,
-                  filterQuality: FilterQuality.high,
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/AIlogo.gif',
+                      height: 80.0,
+                      filterQuality: FilterQuality.high,
+                    ),
+                    const SizedBox(width: 12.0),
+                    Text(
+                      'Jarvis',
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
+                  ],
                 ),
               ),
             ],

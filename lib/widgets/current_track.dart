@@ -33,7 +33,7 @@ class _TrackInfo extends StatelessWidget {
     return Row(
       children: [
         Image.asset(
-          'assets/lofigirl.jpg',
+          'assets/AIlogo.gif',
           height: 60.0,
           width: 60.0,
           fit: BoxFit.cover,

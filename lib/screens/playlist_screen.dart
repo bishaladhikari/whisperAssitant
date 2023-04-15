@@ -81,7 +81,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
               Icons.account_circle_outlined,
               size: 30.0,
             ),
-            label: const Text('Marcus Ng'),
+            label: const Text('Bishal Adhikari'),
           ),
           const SizedBox(width: 8.0),
           IconButton(
@@ -116,7 +116,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
             ),
             children: [
               PlaylistHeader(playlist: widget.playlist),
-              TracksList(tracks: widget.playlist.songs),
+              // TracksList(tracks: widget.playlist.songs),
             ],
           ),
         ),

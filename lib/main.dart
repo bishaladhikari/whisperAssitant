@@ -8,8 +8,31 @@ import 'package:flutter_spotify_ui/models/current_track_model.dart';
 import 'package:flutter_spotify_ui/screens/playlist_screen.dart';
 import 'package:flutter_spotify_ui/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/io.dart';
+import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
+import 'package:mic_stream/mic_stream.dart';
+import 'package:web_socket_channel/io.dart';
 void main() async {
+  final channel = IOWebSocketChannel.connect('ws://localhost:8766');
+
+  channel.stream.listen((message) {
+    print('Received message: $message');
+  });
+
+  // final mic = new MicrophoneStream();
+  //
+  // await mic.initialize();
+  // mic.pipe(channel.sink);
+  //
+  // await Future.delayed(Duration(minutes: 10));
+  // await mic.close();
+
+  channel.sink.add('Hello, Voice assistant, I am client from flutter!');
+
+
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb && (Platform.isMacOS || Platform.isLinux || Platform.isWindows)) {
     await DesktopWindow.setMinWindowSize(const Size(600, 800));
@@ -17,16 +40,18 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (context) => CurrentTrackModel(),
-      child: MyApp(),
+      child: MyApp(channel: channel),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  var channel;
+  MyApp({this.channel});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Spotify UI',
+      title: 'AI Voice Assistant',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -61,14 +86,18 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: Shell(),
+      home: Shell(channel: channel),
+        themeMode: ThemeMode.dark
     );
   }
 }
 
 class Shell extends StatelessWidget {
+  var channel;
+  Shell({this.channel});
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Column(
         children: [
@@ -83,6 +112,12 @@ class Shell extends StatelessWidget {
             ),
           ),
           CurrentTrack(),
+          // StreamBuilder(
+          //   stream: channel.stream,
+          //   builder: (context, snapshot) {
+          //     return Text(snapshot.hasData ? '${snapshot.data}' : '');
+          //   },
+          // )
         ],
       ),
     );
