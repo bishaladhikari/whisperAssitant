@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_ui/bloc/transcriptBloc.dart';
 import 'package:flutter_spotify_ui/data/data.dart';
 import 'package:flutter_spotify_ui/models/current_track_model.dart';
 import 'package:flutter_spotify_ui/screens/playlist_screen.dart';
@@ -19,6 +20,7 @@ void main() async {
   final channel = IOWebSocketChannel.connect('ws://localhost:8766');
 
   channel.stream.listen((message) {
+    transcriptBloc.transcriptText.sink.add(message);
     print('Received message: $message');
   });
 
