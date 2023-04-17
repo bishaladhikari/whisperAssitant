@@ -43,7 +43,7 @@ class SideMenu extends StatelessWidget {
           ),
           _SideMenuIconTab(
             iconData: Icons.audiotrack,
-            title: 'Radio',
+            title: 'Terminal',
             onTap: () {},
           ),
           const SizedBox(height: 12.0),

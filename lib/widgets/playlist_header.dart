@@ -4,6 +4,7 @@ import 'package:flutter_spotify_ui/data/data.dart';
 
 class PlaylistHeader extends StatelessWidget {
   final Playlist playlist;
+  final isListening = false;
 
   const PlaylistHeader({
     Key? key,
@@ -16,11 +17,21 @@ class PlaylistHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            Image.asset(
-              playlist.imageURL,
+            Container(
               height: 200.0,
               width: 200.0,
-              fit: BoxFit.cover,
+              foregroundDecoration: BoxDecoration(
+                  color: isListening ? null : Colors.grey,
+                  backgroundBlendMode:
+                      isListening ? null : BlendMode.saturation),
+              child: Stack(children: [
+                Image.asset(
+                  playlist.imageURL,
+                  height: 200.0,
+                  width: 200.0,
+                  fit: BoxFit.cover,
+                ),
+              ]),
             ),
             const SizedBox(width: 16.0),
             Expanded(
@@ -52,7 +63,7 @@ class PlaylistHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 20.0),
+        const SizedBox(height: 16.0),
         _PlaylistButtons(followers: playlist.followers),
       ],
     );
@@ -74,7 +85,7 @@ class _PlaylistButtons extends StatelessWidget {
         TextButton(
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(
-              vertical: 20.0,
+              vertical: 16.0,
               horizontal: 48.0,
             ),
             shape: RoundedRectangleBorder(

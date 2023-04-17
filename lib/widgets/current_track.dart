@@ -6,7 +6,7 @@ class CurrentTrack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 84.0,
+      height: 91.0,
       width: double.infinity,
       color: Colors.black87,
       child: Padding(
