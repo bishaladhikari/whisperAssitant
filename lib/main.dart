@@ -20,26 +20,29 @@ import 'package:web_socket_channel/io.dart';
 void main() async {
   final channel = IOWebSocketChannel.connect('ws://localhost:8766');
 
-  channel.stream.listen((message) {
+  channel.stream.listen((message) async {
     transcriptBloc.transcriptText.sink.add(message);
-    // OpenAI.apiKey = "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";
-    // Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat.createStream(
-    //   model: "gpt-3.5-turbo",
-    //   messages: [
-    //     OpenAIChatCompletionChoiceMessageModel(
-    //       content: message,
-    //       role: OpenAIChatMessageRole.user,
-    //     )
-    //   ],
-    // );
-    //
-    // var wholeText = "";
-    // chatStream.listen((chatStreamEvent) {
-    //   print(chatStreamEvent);
-    //   wholeText += chatStreamEvent.choices[0].delta.content!;
-    //   transcriptBloc.transcriptText.sink.add(wholeText);
-    //   // print(chatStreamEvent); // ...
-    // });
+    OpenAI.apiKey = "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";
+    Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat.createStream(
+      model: "gpt-3.5-turbo",
+      messages: [
+        OpenAIChatCompletionChoiceMessageModel(
+          content: message,
+          role: OpenAIChatMessageRole.user,
+        )
+      ],
+    );
+
+    var wholeText = "";
+    await for (var chatStreamEvent in chatStream) {
+      var newContent = chatStreamEvent.choices[0].delta.content ?? "";
+      wholeText += newContent;
+      transcriptBloc.transcriptText.sink.add(wholeText);
+      print(newContent);
+    }
+
+    // Use the "say" command to speak the whole text
+    await Process.run('say', [wholeText]);
     print('Received message: $message');
   });
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dart_openai/openai.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,7 @@ class _PlaylistButtons extends StatelessWidget {
                 .caption!
                 .copyWith(fontSize: 12.0, letterSpacing: 2.0),
           ),
-          onPressed: () {
+          onPressed: () async {
             OpenAI.apiKey = "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";
             Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat.createStream(
               model: "gpt-3.5-turbo",
@@ -104,12 +105,15 @@ class _PlaylistButtons extends StatelessWidget {
             );
 
             var wholeText = "";
-            chatStream.listen((chatStreamEvent) {
-              print(chatStreamEvent);
-              wholeText += chatStreamEvent.choices[0].delta.content!;
+            await for (var chatStreamEvent in chatStream) {
+              var newContent = chatStreamEvent.choices[0].delta.content ?? "";
+              wholeText += newContent;
               transcriptBloc.transcriptText.sink.add(wholeText);
-              // print(chatStreamEvent); // ...
-            });
+              print(newContent);
+            }
+
+            // Use the "say" command to speak the whole text
+            await Process.run('say', [wholeText]);
           },
           child: const Text('Prompt'),
         ),
