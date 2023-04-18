@@ -18,6 +18,7 @@ dependencies:
   mic_stream:
   gif:
   rxdart:
+  desktop_multi_window: ^0.2.0
 
 dev_dependencies:
   flutter_test:

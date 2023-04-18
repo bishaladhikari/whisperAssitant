@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  desktop_multi_window:
+    dependency: "direct main"
+    description:
+      name: desktop_multi_window
+      sha256: "29971186ae0790e32b156f127f9c22c5ee77bdb94b14f7cea23f2356d0c76cfc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   desktop_window:
     dependency: "direct main"
     description:
@@ -282,4 +290,4 @@ packages:
     version: "2.3.0"
 sdks:
   dart: ">=2.18.0 <3.0.0"
-  flutter: ">=2.8.0"
+  flutter: ">=3.0.0"

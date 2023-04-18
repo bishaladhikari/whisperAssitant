@@ -58,7 +58,7 @@ class _MicStreamExampleAppState extends State<MicStreamExampleApp>
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
     channel = IOWebSocketChannel.connect('ws://localhost:8766');
-    // channel.sink.add('Hello, Voice assistant, I am client from flutter!');
+    channel.sink.add(jsonEncode({'conversation': "Hello, Voice assistant, I am client from flutter on json!","audio_data": ""}));
     setState(() {
       initPlatformState();
     });
@@ -121,7 +121,7 @@ class _MicStreamExampleAppState extends State<MicStreamExampleApp>
     listener = stream!.listen((audioData) {
       // print(audioData);
       _calculateSamples(audioData);
-      channel.sink.add(jsonEncode({'audio_data': base64.encode(audioData)}));
+      channel.sink.add(jsonEncode({'audio_data': base64.encode(audioData),'conversation': ""}));
     });
     return true;
   }

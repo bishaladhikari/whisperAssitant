@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_ui/bloc/transcriptBloc.dart';
 
 import 'package:flutter_spotify_ui/data/data.dart';
 import 'package:flutter_spotify_ui/widgets/widgets.dart';
@@ -116,6 +117,23 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
             ),
             children: [
               PlaylistHeader(playlist: widget.playlist),
+              SizedBox(height: 20.0),
+              StreamBuilder<String>(
+                stream: transcriptBloc.transcriptText,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(
+                      snapshot.data ?? '',
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                        color: Colors.white,
+                        letterSpacing: 2.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    );
+                  }
+                  return Container();
+                }
+              ),
               // TracksList(tracks: widget.playlist.songs),
             ],
           ),
