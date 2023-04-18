@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:dart_openai/openai.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_ui/bloc/transcriptBloc.dart';
 
 import 'package:flutter_spotify_ui/data/data.dart';
 
@@ -87,7 +91,26 @@ class _PlaylistButtons extends StatelessWidget {
                 .caption!
                 .copyWith(fontSize: 12.0, letterSpacing: 2.0),
           ),
-          onPressed: () {},
+          onPressed: () {
+            OpenAI.apiKey = "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";
+            Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat.createStream(
+              model: "gpt-3.5-turbo",
+              messages: [
+                OpenAIChatCompletionChoiceMessageModel(
+                  content: "hello",
+                  role: OpenAIChatMessageRole.user,
+                )
+              ],
+            );
+
+            var wholeText = "";
+            chatStream.listen((chatStreamEvent) {
+              print(chatStreamEvent);
+              wholeText += chatStreamEvent.choices[0].delta.content!;
+              transcriptBloc.transcriptText.sink.add(wholeText);
+              // print(chatStreamEvent); // ...
+            });
+          },
           child: const Text('Prompt'),
         ),
         const SizedBox(width: 8.0),

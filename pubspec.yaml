@@ -19,10 +19,14 @@ dependencies:
   gif:
   rxdart:
   desktop_multi_window: ^0.2.0
+  dart_openai:
+#  envied:
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+#  envied_generator: ^0.3.0
 
 flutter:
   uses-material-design: true

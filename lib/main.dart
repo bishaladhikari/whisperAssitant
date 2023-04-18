@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dart_openai/openai.dart';
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,24 @@ void main() async {
 
   channel.stream.listen((message) {
     transcriptBloc.transcriptText.sink.add(message);
+    // OpenAI.apiKey = "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";
+    // Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat.createStream(
+    //   model: "gpt-3.5-turbo",
+    //   messages: [
+    //     OpenAIChatCompletionChoiceMessageModel(
+    //       content: message,
+    //       role: OpenAIChatMessageRole.user,
+    //     )
+    //   ],
+    // );
+    //
+    // var wholeText = "";
+    // chatStream.listen((chatStreamEvent) {
+    //   print(chatStreamEvent);
+    //   wholeText += chatStreamEvent.choices[0].delta.content!;
+    //   transcriptBloc.transcriptText.sink.add(wholeText);
+    //   // print(chatStreamEvent); // ...
+    // });
     print('Received message: $message');
   });
 
