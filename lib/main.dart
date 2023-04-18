@@ -22,27 +22,27 @@ void main() async {
 
   channel.stream.listen((message) async {
     transcriptBloc.transcriptText.sink.add(message);
-    OpenAI.apiKey = "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";
-    Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat.createStream(
-      model: "gpt-3.5-turbo",
-      messages: [
-        OpenAIChatCompletionChoiceMessageModel(
-          content: message,
-          role: OpenAIChatMessageRole.user,
-        )
-      ],
-    );
-
-    var wholeText = "";
-    await for (var chatStreamEvent in chatStream) {
-      var newContent = chatStreamEvent.choices[0].delta.content ?? "";
-      wholeText += newContent;
-      transcriptBloc.transcriptText.sink.add(wholeText);
-      print(newContent);
-    }
+    // OpenAI.apiKey = "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";
+    // Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat.createStream(
+    //   model: "gpt-3.5-turbo",
+    //   messages: [
+    //     OpenAIChatCompletionChoiceMessageModel(
+    //       content: message,
+    //       role: OpenAIChatMessageRole.user,
+    //     )
+    //   ],
+    // );
+    //
+    // var wholeText = "";
+    // await for (var chatStreamEvent in chatStream) {
+    //   var newContent = chatStreamEvent.choices[0].delta.content ?? "";
+    //   wholeText += newContent;
+    //   transcriptBloc.transcriptText.sink.add(wholeText);
+    //   print(newContent);
+    // }
 
     // Use the "say" command to speak the whole text
-    await Process.run('say', [wholeText]);
+    // await Process.run('say', [wholeText]);
     print('Received message: $message');
   });
 
