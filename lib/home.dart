@@ -192,7 +192,7 @@ class _MicStreamExampleAppState extends State<MicStreamExampleApp>
     return true;
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
+  // Platform message.dart are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     if (!mounted) return;
     isActive = true;

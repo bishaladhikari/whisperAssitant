@@ -3,32 +3,44 @@ PODS:
     - FlutterMacOS
   - desktop_window (0.0.1):
     - FlutterMacOS
+  - flutter_tts (0.0.1):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - mic_stream (0.5.2):
+    - FlutterMacOS
+  - speech_to_text_macos (0.0.1):
     - FlutterMacOS
 
 DEPENDENCIES:
   - desktop_multi_window (from `Flutter/ephemeral/.symlinks/plugins/desktop_multi_window/macos`)
   - desktop_window (from `Flutter/ephemeral/.symlinks/plugins/desktop_window/macos`)
+  - flutter_tts (from `Flutter/ephemeral/.symlinks/plugins/flutter_tts/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - mic_stream (from `Flutter/ephemeral/.symlinks/plugins/mic_stream/macos`)
+  - speech_to_text_macos (from `Flutter/ephemeral/.symlinks/plugins/speech_to_text_macos/macos`)
 
 EXTERNAL SOURCES:
   desktop_multi_window:
     :path: Flutter/ephemeral/.symlinks/plugins/desktop_multi_window/macos
   desktop_window:
     :path: Flutter/ephemeral/.symlinks/plugins/desktop_window/macos
+  flutter_tts:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_tts/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   mic_stream:
     :path: Flutter/ephemeral/.symlinks/plugins/mic_stream/macos
+  speech_to_text_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/speech_to_text_macos/macos
 
 SPEC CHECKSUMS:
   desktop_multi_window: 566489c048b501134f9d7fb6a2354c60a9126486
   desktop_window: d0c0a7b6d18a0833be6e3ace6caad55b7bb40d4b
+  flutter_tts: 64651204e5d276ffea5a910f942d5e9785a96085
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   mic_stream: f74b7bc8d9330a9eaac4298911f9fa6c0af642dc
+  speech_to_text_macos: ae04291713998dede24b85d3b50bd8fedcbfb565
 
-PODFILE CHECKSUM: 52993849a2c3a79e816e60a9c551f474351df211
+PODFILE CHECKSUM: 66c72e1af8dcba962f349699a113201666e6736a
 
 COCOAPODS: 1.12.0

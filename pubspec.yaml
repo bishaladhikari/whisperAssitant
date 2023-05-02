@@ -21,7 +21,10 @@ dependencies:
   desktop_multi_window: ^0.2.0
   dart_openai:
 #  envied:
-
+  speech_to_text: ^6.1.1
+  http: ^0.13.5
+  flutter_tts:
+  animate_do: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -33,15 +36,28 @@ flutter:
 
   assets:
     - assets/
-
+    - assets/images/
+    - assets/sounds/
+#  fonts:
+#    - family: Montserrat
+#      fonts:
+#        - asset: fonts/Montserrat-Regular.ttf
+#          weight: 400
+#        - asset: fonts/Montserrat-Medium.ttf
+#          weight: 500
+#        - asset: fonts/Montserrat-SemiBold.ttf
+#          weight: 600
+#        - asset: fonts/Montserrat-Bold.ttf
+#          weight: 700
   fonts:
-    - family: Montserrat
+    - family: Quicksand
       fonts:
-        - asset: fonts/Montserrat-Regular.ttf
-          weight: 400
-        - asset: fonts/Montserrat-Medium.ttf
-          weight: 500
-        - asset: fonts/Montserrat-SemiBold.ttf
-          weight: 600
-        - asset: fonts/Montserrat-Bold.ttf
+        - asset: assets/fonts/quicksand/Quicksand-Regular.ttf
+        - asset: assets/fonts/quicksand/Quicksand-Bold.ttf
           weight: 700
+        - asset: assets/fonts/quicksand/Quicksand-Light.ttf
+          weight: 300
+        - asset: assets/fonts/quicksand/Quicksand-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/quicksand/Quicksand-SemiBold.ttf
+          weight: 600
