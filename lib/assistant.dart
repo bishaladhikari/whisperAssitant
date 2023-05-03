@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black,
         accentColor: const Color(0xFF1DB954),
         iconTheme: const IconThemeData().copyWith(color: Colors.white),
-        fontFamily: 'Montserrat',
+        fontFamily: 'Quicksand',
         textTheme: TextTheme(
           headline2: const TextStyle(
             color: Colors.white,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spotify_ui/bloc/moviesBloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/message.dart';
 import '../models/movie.dart';
@@ -30,17 +31,58 @@ class MovieListItem extends StatelessWidget {
     //   title: Text(movie.title),
     //   subtitle: Text(movie.year),
     // );
-    return Container(
-      width: 160.0,
-      child: Card(
-        child: Wrap(
-          children: [
-            Image.network(movie.posterUrl, fit: BoxFit.cover),
-            ListTile(
-              title: Text(movie.title),
-              subtitle: Text(movie.year),
-            ),
-          ],
+
+    // add a  link to the imdb page using imdb id
+
+    Future<void> _launchUrl(_url) async {
+      if (!await launchUrl(_url)) {
+        throw Exception('Could not launch $_url');
+      }
+    }
+    return GestureDetector(
+      onTap: () {
+        // print(movie.imdbId);
+        // open on browser
+        final Uri _url = Uri.parse('https://www.imdb.com/title/${movie.imdbId}/');
+        _launchUrl(_url);
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => MovieDetailsPage(movie: movie),
+        //   ),
+        // );
+      },
+      child: Container(
+        width: 160.0,
+        child: Card(
+          child: Wrap(
+            children: [
+              Image.network(movie.posterUrl, fit: BoxFit.cover),
+              ListTile(
+                title: Text(movie.title, overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // add a star icon here
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.star, color:const Color(0xFFA8A800), size: 16.0),
+                          Text(movie.rating??''),
+                        ]),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(movie.year),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -306,7 +348,7 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
               alignment: Alignment.bottomCenter,
               child: ColorFiltered(
                   colorFilter: colorFilter,
-                  child: Image.asset("assets/VAwave.gif", height: 3, width: double.infinity, fit: BoxFit.cover)),
+                  child: Image.asset("assets/VAwave.gif", height: 4, width: double.infinity, fit: BoxFit.cover)),
             ),
           ],
         ),
@@ -339,10 +381,41 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
   Widget _buildAssistantMessage(Message message) {
     var content;
     print(message.content);
-    if(isJson(message.content)) {
+    int startIndex = message.content.indexOf('{');
+    int endIndex = message.content.lastIndexOf('}');
+
+// Extract the JSON object from the string
+    if(startIndex == -1 || endIndex == -1) {
+      return ListTile(
+        // leading: CircleAvatar(
+        //   backgroundColor: const Color(0xFF4E4E5E),
+        //   child: Text('A', style: TextStyle(color: Colors.white)),
+        // ),
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+            decoration: BoxDecoration(
+              color: const Color(0xFF8E8EE3),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Text(
+              message.content,
+              style: TextStyle(fontSize: 18.0),
+            ),
+          ),
+        ),
+      );
+    }
+    String jsonObjectString = message.content.substring(startIndex, endIndex + 1);
+
+// Decode the JSON object into a map
+    Map<String, dynamic> jsonObject = jsonDecode(jsonObjectString);
+    // if(isJson(message.content)) {
       print('is json');
-      content = jsonDecode(message.content)['answer'];
-      var json = jsonDecode(message.content);
+      content = jsonObject['answer'];
+      var json = jsonObject;
       if(json.containsKey('movies')) {
           // give a list of movies in a card slide view
         var movies = json['movies'];
@@ -382,7 +455,7 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Text(
-                      jsonDecode(message.content)['answer'],
+                      jsonObject['answer'],
                       style: TextStyle(fontSize: 18.0),
                     ),
                   ),
@@ -489,7 +562,7 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
         );
       } else if (json.containsKey('code')) {
         String code = json['code'];
-        String explanation = json.containsKey('explanation') ? json['explanation'] : null;
+        String explanation = json.containsKey('explanation') ? json['explanation'] : "";
 
         return Padding(
           padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -566,7 +639,7 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
       else {
         return SizedBox.shrink();
       }
-    }
+    // }
     content = message.content;
     return Column(
       children: [
