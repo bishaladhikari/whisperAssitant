@@ -100,6 +100,7 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
   fetchMovies(imdbIds) async {
     print(imdbIds);
     List<Movie> movies = [];
+    moviesBloc.drainStream();
     for (var imdbId in imdbIds) {
       final response = await http.get(Uri.parse(
           'http://www.omdbapi.com/?apikey=4547c6ef&i=$imdbId'));
@@ -225,6 +226,7 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
     _streamController.close();
     super.dispose();
   }
+  var fetchedIds = [];
 
   @override
   Widget build(BuildContext context) {
@@ -423,7 +425,11 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
         for(var movie in movies) {
           imdbIds.add(movie['imdb_id']);
         }
-        fetchMovies(imdbIds);
+        // if ids dont exists then push to fetchedIds
+        if(imdbIds.isNotEmpty && !fetchedIds.contains(imdbIds)) {
+          fetchedIds.addAll(imdbIds);
+          fetchMovies(imdbIds);
+        }
         // for(var movie in movies) {
         //   await fetchMovies(movie['id']);
         // }
