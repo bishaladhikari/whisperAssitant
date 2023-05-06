@@ -54,12 +54,14 @@ class MovieListItem extends StatelessWidget {
       },
       child: Container(
         width: 160.0,
+        color: Colors.transparent,
         child: Card(
+          color: Colors.transparent,
           child: Wrap(
             children: [
               Image.network(movie.posterUrl, fit: BoxFit.cover),
               ListTile(
-                title: Text(movie.title, overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false),
+                title: Text(movie.title, overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,style: TextStyle(color: Colors.white)),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,7 +70,7 @@ class MovieListItem extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                       child: Row(
                         children: [
-                          Icon(Icons.star, color:const Color(0xFFA8A800), size: 16.0),
+                          Icon(Icons.star, color: const Color(0xFF95A4FC), size: 16.0),
                           Text(movie.rating??''),
                         ]),
                     ),
@@ -239,8 +241,9 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
       onExit: _handleMouseExit,
       onHover: _handleMouseHover,
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.black.withOpacity(0.5),
             toolbarHeight: 50,
             leading:  GestureDetector(
               onPanStart: _handleDragStart,
@@ -346,12 +349,12 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: ColorFiltered(
-                  colorFilter: colorFilter,
-                  child: Image.asset("assets/VAwave.gif", height: 4, width: double.infinity, fit: BoxFit.cover)),
-            ),
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: ColorFiltered(
+            //       colorFilter: colorFilter,
+            //       child: Image.asset("assets/VAwave.gif", height: 4, width: double.infinity, fit: BoxFit.cover)),
+            // ),
           ],
         ),
       ),
@@ -369,12 +372,13 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
           padding: EdgeInsets.all(10.0),
           margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
           decoration: BoxDecoration(
-            color: const Color(0xFF4E4E5E),
+            // color: const Color(0xFF4E4E5E),
+            color: Colors.white,
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Text(
             message.content,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.black.withOpacity(0.6)),
           ),
         ),
       ),
@@ -388,26 +392,45 @@ class _RealTimeTextFileReaderState extends State<RealTimeTextFileReader> {
 
 // Extract the JSON object from the string
     if(startIndex == -1 || endIndex == -1) {
-      return ListTile(
-        // leading: CircleAvatar(
-        //   backgroundColor: const Color(0xFF4E4E5E),
-        //   child: Text('A', style: TextStyle(color: Colors.white)),
-        // ),
-        title: Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            padding: EdgeInsets.all(10.0),
-            margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-            decoration: BoxDecoration(
-              color: const Color(0xFF8E8EE3),
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Text(
-              message.content,
-              style: TextStyle(fontSize: 18.0),
+      return Column(
+        children: [
+          ListTile(
+              trailing: IconButton(
+                tooltip: 'Copy',
+                icon: const Icon(Icons.content_copy, color: Colors.white38,size: 18.0),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: message.content.toString()));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        backgroundColor: Colors.black,
+                        closeIconColor: Colors.white,
+                        content: Text('Copied to clipboard', style: TextStyle(color: Colors.white),)),
+                  );
+                },
+              ),
+          ),
+          ListTile(
+            // leading: CircleAvatar(
+            //   backgroundColor: const Color(0xFF4E4E5E),
+            //   child: Text('A', style: TextStyle(color: Colors.white)),
+            // ),
+            title: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                padding: EdgeInsets.all(10.0),
+                margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF8E8EE3),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Text(
+                  message.content,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       );
     }
     String jsonObjectString = message.content.substring(startIndex, endIndex + 1);

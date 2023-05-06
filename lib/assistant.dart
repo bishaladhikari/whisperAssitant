@@ -3,9 +3,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_acrylic/macos/macos_blur_view_state.dart';
+import 'package:flutter_acrylic/window.dart';
+import 'package:flutter_acrylic/window_effect.dart';
 import 'package:flutter_spotify_ui/screens/realtime_text_file_reader.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Window.initialize();
+  await Window.setEffect(
+    effect: WindowEffect.acrylic,
+    // color: Color(0xCC222222),
+    color: Colors.white38,
+  );
   runApp(MyApp());
 }
 
@@ -14,15 +24,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    Window.setBlurViewState(MacOSBlurViewState.active);
     return MaterialApp(
       title: 'Real-Time Text File Reader',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
-        scaffoldBackgroundColor: const Color(0xFF2E2E2F),
-        backgroundColor: const Color(0xFF121212),
+        scaffoldBackgroundColor: Colors.transparent,
+        // backgroundColor: const Color(0xFF121212),
         primaryColor: Colors.black,
         accentColor: const Color(0xFF1DB954),
         iconTheme: const IconThemeData().copyWith(color: Colors.white),
